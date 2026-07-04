@@ -95,21 +95,72 @@ No actives los anuncios en el sitio hasta que tu cuenta esté aprobada — mostr
 anuncios de otro proveedor o simular anuncios propios antes de la aprobación
 puede afectar la revisión.
 
-## 6. Formulario de contacto (opcional, gratis)
+## 6. Formulario de contacto (ya está conectado, solo falta tu clave)
 
-El formulario de `contacto.html` es solo visual por ahora. Para que envíe
-correos reales sin programar un backend, la opción más simple y gratuita es:
+El formulario de `contacto.html` ya tiene el código funcional integrado con **Web3Forms** (gratis, hasta 250 envíos al mes). Solo falta que actives tu clave personal:
 
-1. Crea una cuenta gratis en [formspree.io](https://formspree.io) o
-   [web3forms.com](https://web3forms.com)
-2. Sigue sus instrucciones para obtener tu "endpoint" (una URL única)
-3. Reemplaza `action="#"` en el `<form>` de `contacto.html` por esa URL
+1. Ve a [web3forms.com](https://web3forms.com)
+2. Ingresa el correo donde quieres recibir los mensajes y confirma
+3. Te dan una "Access Key" — cópiala
+4. Abre `contacto.html`, busca el texto `TU_ACCESS_KEY_AQUI` y reemplázalo por tu clave real
+5. Sube el cambio a GitHub
 
-## 7. Ideas para cuando ya tengas tráfico
+Mientras no hagas esto, el formulario se ve bien pero no enviará nada.
 
-- Revisa qué artículos generan más visitas (Google Search Console, gratis) y
-  escribe más contenido relacionado a esos temas.
-- Agrega enlaces internos entre artículos relacionados (ya hay algunos de ejemplo).
-- Considera migrar de HTML estático a algo como WordPress o un generador de
-  sitios (Hugo, Astro) solo si el volumen de artículos empieza a ser difícil
-  de mantener a mano — no hace falta antes de eso.
+## 8. Cómo conseguir tu propio dominio (barato)
+
+No es obligatorio para empezar, pero ayuda a la aprobación de AdSense y se ve más profesional que `usuario.github.io`.
+
+**Dato importante:** ya no existen dominios gratuitos confiables — servicios como Freenom (que ofrecía dominios .tk/.ml gratis) dejaron de operar. Lo más barato y seguro es comprar uno de bajo costo:
+
+| Registrador | Por qué considerarlo |
+|---|---|
+| **Porkbun** | Precios bajos, WHOIS privado incluido gratis, panel simple |
+| **Namecheap** | Muy usado, buen soporte, promociones frecuentes el primer año |
+| **Cloudflare Registrar** | Vende al precio "de fábrica" sin margen — de los más baratos, pero requiere que tu sitio use su DNS |
+
+Un dominio `.com` suele costar entre 8-15 USD al año. Extensiones menos comunes (`.online`, `.site`, `.xyz`) pueden salir más baratas (2-5 USD el primer año) pero se ven menos profesionales para un sitio serio.
+
+**Pasos generales para conectar tu dominio a GitHub Pages:**
+1. Compra el dominio en el registrador que elijas
+2. En el panel del registrador, busca la sección de DNS y agrega los registros que GitHub indica en su [guía oficial de dominio personalizado](https://docs.github.com/es/pages/configuring-a-custom-domain-for-your-github-pages-site)
+3. En tu repositorio: Settings → Pages → "Custom domain", escribe tu dominio y guarda
+4. Espera unas horas a que se propague el DNS (a veces toma hasta 24-48 horas)
+
+## 9. Analíticas: cómo saber cuánta gente visita tu sitio
+
+Ya dejamos preparado el espacio para **Google Analytics (GA4)** en todas las páginas. Para activarlo:
+
+1. Ve a [analytics.google.com](https://analytics.google.com) y crea una cuenta gratis
+2. Crea una "propiedad" nueva con la URL de tu sitio
+3. Te dan un ID de medición con formato `G-XXXXXXXXXX`
+4. Busca ese texto (`G-XXXXXXXXXX`) en **todos** los archivos `.html` y reemplázalo por tu ID real (aparece dos veces por archivo, en el bloque de Google Analytics cerca de `</head>`)
+5. Sube los cambios a GitHub
+
+Con esto, entras a tu panel de Analytics cuando quieras y ves visitas, de qué país vienen, qué páginas leen más, etc. — en privado, solo tú lo ves.
+
+**Si además quieres un contador público y real** (no inventado) que cualquiera pueda ver:
+1. Crea una cuenta gratis en [goatcounter.com](https://www.goatcounter.com) (sin tarjeta de crédito)
+2. Sigue sus instrucciones para pegar su script de seguimiento en tu sitio
+3. En su panel, activa la opción de "estadísticas públicas"
+4. Te dan un link público (algo como `tucuenta.goatcounter.com`) que puedes enlazar desde tu footer si quieres mostrar tráfico real
+
+Preferimos esto sobre un "contador de visitas" genérico de internet porque muchos de esos widgets muestran números falsos o inflados, cargan scripts pesados de sitios de baja calidad, y pueden verse poco confiables ante una revisión de AdSense.
+
+## 10. El archivo ads.txt (para después de la aprobación)
+
+Cuando AdSense te apruebe, Google te va a pedir subir un archivo llamado `ads.txt` en la raíz de tu repositorio, con una sola línea que ellos te dan (algo como `google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0`). No lo crees antes de tener ese dato real — un `ads.txt` vacío o mal formado puede generar advertencias.
+
+## 11. Checklist final antes de aplicar a AdSense
+
+- [ ] Tienes 15+ artículos publicados (ya vas en 21)
+- [ ] El sitio lleva algunas semanas online, no recién subido
+- [ ] Reemplazaste `[tu correo de contacto]` por tu correo real en `contacto.html` y `privacidad.html`
+- [ ] Reemplazaste `TU_ACCESS_KEY_AQUI` en `contacto.html` por tu clave real de Web3Forms (o el formulario no enviará nada)
+- [ ] Todos los links entre artículos funcionan sin error 404
+- [ ] Activaste Google Analytics con tu ID real (opcional pero recomendado)
+- [ ] Revisaste el sitio completo en el celular, no solo en computadora
+- [ ] (Opcional pero recomendado) Ya tienes un dominio propio conectado
+
+Con todo esto listo, el sitio está en buen estado para enviarlo a revisión de AdSense siguiendo los pasos que ya conversamos antes.
+

@@ -5,9 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contacto — RutaBeca</title>
 <meta name="description" content="Escríbenos con preguntas, correcciones o sugerencias de tema para RutaBeca.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Contacto — RutaBeca">
+<meta property="og:description" content="Escríbenos con preguntas, correcciones o sugerencias de tema para RutaBeca.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
+
+<!-- Google Analytics (GA4) — reemplaza G-XXXXXXXXXX por tu ID de medición real -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
 </head>
 <body>
 
@@ -38,12 +53,18 @@
     <p>¿Encontraste un dato desactualizado, tienes una sugerencia de tema o quieres colaborar? Escríbenos.</p>
 
     <!--
-      NOTA: este formulario es una plantilla visual. Para que envíe correos de verdad
-      sin programar un backend, puedes conectarlo gratis a un servicio como Formspree
-      o Web3Forms (instrucciones en el README del proyecto). Mientras tanto, deja
-      también un correo visible como respaldo.
+      Este formulario funciona de verdad usando Web3Forms (gratis, hasta 250
+      envíos al mes, sin backend propio). Para activarlo:
+      1. Ve a https://web3forms.com
+      2. Ingresa tu correo (el que quieres que reciba los mensajes) y confirma
+      3. Te dan una "Access Key" — cópiala
+      4. Reemplaza TU_ACCESS_KEY_AQUI abajo por esa clave real
+      Mientras no reemplaces la clave, el formulario no enviará nada.
     -->
-    <form class="contact-form" action="#" method="POST">
+    <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="3e135cf3-d22f-40d3-ad40-bb99120b89eb">
+      <input type="hidden" name="subject" value="Nuevo mensaje desde RutaBeca">
+      <input type="checkbox" name="botcheck" style="display:none">
       <div>
         <label for="nombre">Nombre</label>
         <input type="text" id="nombre" name="nombre" required>
@@ -57,9 +78,36 @@
         <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
       </div>
       <button type="submit">Enviar</button>
+      <p id="form-status" style="font-size: 0.85rem; margin-top: 8px;"></p>
     </form>
 
-    <p style="margin-top: 32px;">También puedes escribir directamente a <strong>contacto@rutabeca.com</strong> (reemplaza este correo por el tuyo cuando definas el dominio final).</p>
+    <script>
+      const form = document.querySelector('.contact-form');
+      const status = document.getElementById('form-status');
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        status.textContent = 'Enviando...';
+        const formData = new FormData(form);
+        try {
+          const response = await fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+          });
+          const result = await response.json();
+          if (result.success) {
+            status.textContent = '¡Mensaje enviado! Te responderemos pronto.';
+            form.reset();
+          } else {
+            status.textContent = 'Hubo un error. Intenta de nuevo o escríbenos directamente.';
+          }
+        } catch (error) {
+          status.textContent = 'Hubo un error. Intenta de nuevo o escríbenos directamente.';
+        }
+      });
+    </script>
+
+    <p style="margin-top: 32px;">También puedes escribir directamente a <strong>[tu correo real aquí]</strong>.</p>
   </div>
 </main>
 
