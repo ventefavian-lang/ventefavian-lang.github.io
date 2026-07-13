@@ -151,7 +151,33 @@ Preferimos esto sobre un "contador de visitas" genérico de internet porque much
 
 Cuando AdSense te apruebe, Google te va a pedir subir un archivo llamado `ads.txt` en la raíz de tu repositorio, con una sola línea que ellos te dan (algo como `google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0`). No lo crees antes de tener ese dato real — un `ads.txt` vacío o mal formado puede generar advertencias.
 
-## 11. Checklist final antes de aplicar a AdSense
+## 12. Activar el contador de visitantes en vivo
+
+Ya agregamos un contador real (no un número inventado) en el footer de todas las páginas, que muestra cuántas personas tienen el sitio abierto en este momento. Usa Firebase (gratis) para esto. Para activarlo:
+
+1. Ve a [console.firebase.google.com](https://console.firebase.google.com) e inicia sesión con una cuenta de Google
+2. Clic en **"Agregar proyecto"**, ponle un nombre (ej. "rutabeca"), y sigue el asistente (puedes desactivar Google Analytics del proyecto, no lo necesitas)
+3. Dentro del proyecto, en el menú izquierdo, ve a **"Realtime Database"** → **"Crear base de datos"**
+4. Elige la ubicación más cercana (ej. us-central) y selecciona modo **"de prueba"** (test mode) — esto es suficiente para un sitio pequeño
+5. Ve a **Configuración del proyecto** (ícono de engranaje) → pestaña **"General"** → baja hasta "Tus apps" → clic en el ícono `</>` (Web) para registrar una app
+6. Copia el objeto `firebaseConfig` que te muestra (tiene `apiKey`, `authDomain`, `databaseURL`, `projectId`)
+7. Abre el archivo `js/live-visitors.js` de tu proyecto y reemplaza los valores de ejemplo por los tuyos reales
+8. Sube el cambio a GitHub
+
+**Importante sobre seguridad:** el modo de prueba de Firebase expira las reglas de acceso después de 30 días por defecto. Si el contador deja de funcionar después de un mes, entra a Realtime Database → pestaña "Reglas" y extiende la fecha, o configura reglas permanentes simples como:
+```json
+{
+  "rules": {
+    "rutabeca_presence": {
+      ".read": true,
+      ".write": true
+    }
+  }
+}
+```
+Esto es suficiente para un contador de presencia simple en un sitio de tráfico bajo-medio; no expone datos sensibles porque solo se guarda un valor `true` por visitante conectado.
+
+## 13. Checklist final antes de aplicar a AdSense
 
 - [ ] Tienes 15+ artículos publicados (ya vas en 21)
 - [ ] El sitio lleva algunas semanas online, no recién subido
