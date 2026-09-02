@@ -1,0 +1,8 @@
+import type { Metadata } from "next";
+import { TrustPage } from "../components/TrustPage";
+
+export const metadata: Metadata = { title: "Sobre RutaBeca", description: "Conoce el propósito, alcance y límites de RutaBeca como proyecto educativo independiente." };
+
+export default function AboutPage() {
+  return <TrustPage eyebrow="Quiénes somos" title="Información clara para tomar decisiones propias." description="RutaBeca organiza fuentes, explica procesos y ofrece práctica educativa sin vender resultados."><h2>Nuestro propósito</h2><p>RutaBeca nació para reducir la confusión que producen las capturas antiguas, los rumores y las explicaciones incompletas sobre becas. Queremos que un estudiante pueda identificar la fuente responsable, comprender qué debe revisar y prepararse con materiales originales.</p><h2>Qué hacemos</h2><ul><li>Resumimos convocatorias con enlaces a fuentes primarias.</li><li>Indicamos la fecha de revisión del contenido.</li><li>Diseñamos guías y ejercicios originales.</li><li>Ofrecemos herramientas orientativas con reglas transparentes.</li><li>Corregimos información cuando una fuente oficial cambia.</li></ul><h2>Qué no hacemos</h2><p>No tramitamos postulaciones, no solicitamos contraseñas, no garantizamos becas, no vendemos vacantes y no representamos a ninguna entidad. Los usuarios deben completar cualquier proceso exclusivamente en los canales señalados por la convocatoria oficial.</p><h2>Principios editoriales</h2><p>Priorizamos fuentes oficiales, claridad, fecha visible, separación entre publicidad y contenido, protección de datos y corrección pública de errores.</p></TrustPage>;
+}
