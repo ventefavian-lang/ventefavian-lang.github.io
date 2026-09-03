@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de sueldo neto: AFP vs. ONP — RutaBeca</title>
+<meta name="description" content="Calcula tu sueldo neto real descontando AFP o ONP, con las comisiones actuales de cada AFP en Perú.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Calculadora de sueldo neto: AFP vs. ONP — RutaBeca">
+<meta property="og:description" content="Calcula tu sueldo neto real descontando AFP o ONP, con las comisiones actuales de cada AFP en Perú.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5848165733883004" crossorigin="anonymous"></script>
+<!-- Google Analytics (GA4) — reemplaza G-XXXXXXXXXX por tu ID de medición real -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+
+<style>
+  .calc-box {
+    max-width: 640px;
+    margin: 0 auto 48px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 32px;
+  }
+  .calc-row { margin-bottom: 20px; }
+  .calc-row label {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+    display: block;
+    margin-bottom: 8px;
+  }
+  .calc-row input[type="number"] {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid var(--ink);
+    border-radius: var(--radius);
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    background: var(--paper);
+    color: var(--ink);
+  }
+  .calc-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+  }
+  .calc-option {
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius);
+    padding: 12px;
+    cursor: pointer;
+    text-align: center;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .calc-option input { display: none; }
+  .calc-option.selected {
+    border-color: var(--route);
+    background: var(--paper-alt);
+  }
+  .calc-option .opt-name { font-weight: 600; font-size: 0.92rem; }
+  .calc-option .opt-detail {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
+  .calc-results {
+    margin-top: 28px;
+    border-top: 2px solid var(--ink);
+    padding-top: 20px;
+  }
+  .calc-result-line {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 0.95rem;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .calc-result-line.total {
+    font-weight: 700;
+    font-size: 1.15rem;
+    border-bottom: none;
+    border-top: 1px solid var(--ink);
+    margin-top: 8px;
+    padding-top: 14px;
+  }
+  .calc-result-line .amount { font-family: var(--font-mono); }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="brand">
+      <svg class="brand-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="16" cy="16" r="14" stroke="#1B2430" stroke-width="2"/>
+        <path d="M6 20C10 14 14 22 18 16C21 11 24 15 26 12" stroke="#2F6F62" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="6" cy="20" r="1.8" fill="#1B2430"/>
+        <circle cx="26" cy="12" r="1.8" fill="#1B2430"/>
+      </svg>
+      <span class="brand-name">RutaBeca</span>
+    </a>
+    <nav class="main-nav">
+      <a href="index.html">Inicio</a>
+      <a href="finanzas.html">Finanzas</a>
+      <a href="becas.html">Becas</a>
+      <a href="carrera.html">Carrera</a>
+      <a href="todos-los-articulos.html">Todos los artículos</a>
+      <a href="calculadora-sueldo.html" class="active">Herramientas</a>
+      <a href="sobre-nosotros.html">Sobre nosotros</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero wrap">
+    <div class="hero-eyebrow">Herramienta gratuita</div>
+    <h1>Calculadora de sueldo neto: AFP vs. ONP</h1>
+    <p class="lede">Ingresa tu sueldo bruto y compara cuánto te descuentan en cada AFP, o si te conviene más ONP. Con las comisiones actuales de cada administradora en Perú.</p>
+  </section>
+
+  <div class="wrap">
+    <div class="calc-box">
+      <div class="calc-row">
+        <label for="sueldo">Tu sueldo bruto mensual (S/)</label>
+        <input type="number" id="sueldo" value="2000" min="0" step="50">
+      </div>
+
+      <div class="calc-row">
+        <label>Sistema de pensión</label>
+        <div class="calc-options" id="sistema-options">
+          <label class="calc-option selected" data-value="habitat">
+            <input type="radio" name="sistema" value="habitat" checked>
+            <div class="opt-name">AFP Habitat</div>
+            <div class="opt-detail">1.47% comisión</div>
+          </label>
+          <label class="calc-option" data-value="integra">
+            <input type="radio" name="sistema" value="integra">
+            <div class="opt-name">AFP Integra</div>
+            <div class="opt-detail">1.55% comisión</div>
+          </label>
+          <label class="calc-option" data-value="prima">
+            <input type="radio" name="sistema" value="prima">
+            <div class="opt-name">AFP Prima</div>
+            <div class="opt-detail">1.60% comisión</div>
+          </label>
+          <label class="calc-option" data-value="profuturo">
+            <input type="radio" name="sistema" value="profuturo">
+            <div class="opt-name">AFP Profuturo</div>
+            <div class="opt-detail">1.69% comisión</div>
+          </label>
+          <label class="calc-option" data-value="onp">
+            <input type="radio" name="sistema" value="onp">
+            <div class="opt-name">ONP</div>
+            <div class="opt-detail">13% aporte fijo</div>
+          </label>
+        </div>
+      </div>
+
+      <div class="calc-results" id="resultados"></div>
+    </div>
+
+    <div class="ad-slot" style="margin-left: 0; margin-right: 0;">
+      <div class="ad-label">Publicidad</div>
+      <div class="ad-placeholder">Espacio reservado para anuncio (se activa tras aprobación de AdSense)</div>
+    </div>
+  </div>
+
+  <section class="block wrap" style="max-width: 640px; margin: 0 auto;">
+    <h2>Sobre esta calculadora</h2>
+    <p style="color: var(--ink-soft); font-size: 0.95rem;">Los porcentajes de comisión de cada AFP se actualizan periódicamente — usamos las cifras de referencia recopiladas en junio de 2026. ONP descuenta un 13% fijo sobre tu sueldo bruto, sin comisión adicional. Esta calculadora es solo una guía educativa y no reemplaza el cálculo oficial de tu boleta de pago, que puede incluir otros conceptos (impuesto a la renta de quinta categoría, EsSalud, etc.). Para más contexto, revisa nuestra guía completa de <a href="articulo-afp-vs-onp.html">AFP vs. ONP</a>.</p>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Explora</h4>
+        <a href="finanzas.html">Finanzas</a>
+        <a href="becas.html">Becas</a>
+        <a href="carrera.html">Carrera</a>
+      </div>
+      <div class="footer-col">
+        <h4>Sitio</h4>
+        <a href="sobre-nosotros.html">Sobre nosotros</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="privacidad.html">Política de privacidad</a>
+      </div>
+    </div>
+    <div class="footer-note" style="display:flex; align-items:center; gap:8px; margin-top:14px;">
+      <span style="width:8px; height:8px; border-radius:50%; background:var(--route); display:inline-block; flex-shrink:0;"></span>
+      <span id="live-visitor-count" style="font-family: var(--font-mono); font-size:0.75rem;">conectando…</span>
+      <span style="font-family: var(--font-mono); font-size:0.75rem; color:var(--ink-soft);">navegando el sitio ahora</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="js/live-visitors.js"></script>
+
+<script>
+  const RATES = {
+    habitat:   { comision: 0.0147, label: "AFP Habitat" },
+    integra:   { comision: 0.0155, label: "AFP Integra" },
+    prima:     { comision: 0.0160, label: "AFP Prima" },
+    profuturo: { comision: 0.0169, label: "AFP Profuturo" },
+    onp:       { comision: null,   label: "ONP" }
+  };
+  const PRIMA_SEGURO = 0.0137;
+  const APORTE_AFP = 0.10;
+  const APORTE_ONP = 0.13;
+
+  const sueldoInput = document.getElementById('sueldo');
+  const options = document.querySelectorAll('.calc-option');
+  const resultsBox = document.getElementById('resultados');
+
+  function fmt(n) {
+    return 'S/ ' + n.toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function calcular() {
+    const sueldo = parseFloat(sueldoInput.value) || 0;
+    const selected = document.querySelector('input[name="sistema"]:checked').value;
+    const info = RATES[selected];
+
+    let html = '';
+    if (selected === 'onp') {
+      const aporte = sueldo * APORTE_ONP;
+      const neto = sueldo - aporte;
+      html = `
+        <div class="calc-result-line"><span>Aporte a ONP (13%)</span><span class="amount">${fmt(aporte)}</span></div>
+        <div class="calc-result-line total"><span>Sueldo neto (solo por pensión)</span><span class="amount">${fmt(neto)}</span></div>
+      `;
+    } else {
+      const aporte = sueldo * APORTE_AFP;
+      const seguro = sueldo * PRIMA_SEGURO;
+      const comision = sueldo * info.comision;
+      const descuentoTotal = aporte + seguro + comision;
+      const neto = sueldo - descuentoTotal;
+      html = `
+        <div class="calc-result-line"><span>Va a tu fondo (10%)</span><span class="amount">${fmt(aporte)}</span></div>
+        <div class="calc-result-line"><span>Prima de seguro (1.37%)</span><span class="amount">${fmt(seguro)}</span></div>
+        <div class="calc-result-line"><span>Comisión ${info.label} (${(info.comision*100).toFixed(2)}%)</span><span class="amount">${fmt(comision)}</span></div>
+        <div class="calc-result-line total"><span>Sueldo neto (solo por pensión)</span><span class="amount">${fmt(neto)}</span></div>
+      `;
+    }
+    resultsBox.innerHTML = html;
+  }
+
+  sueldoInput.addEventListener('input', calcular);
+  options.forEach(opt => {
+    opt.addEventListener('click', () => {
+      options.forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      calcular();
+    });
+  });
+
+  calcular();
+</script>
+
+</body>
+</html>
