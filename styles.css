@@ -448,6 +448,62 @@ table.data-table tr.highlight td {
   border-top: 1px dashed var(--line);
 }
 
+/* ---------- Preguntas frecuentes (FAQ) ---------- */
+
+.faq-list {
+  margin: 1.8em 0;
+}
+
+.faq-item {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin-bottom: 10px;
+  background: var(--card);
+  overflow: hidden;
+}
+
+.faq-question {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 16px 18px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.98rem;
+  color: var(--ink);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.faq-question .faq-icon {
+  font-family: var(--font-mono);
+  color: var(--route);
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.faq-item.open .faq-question .faq-icon {
+  transform: rotate(45deg);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease, padding 0.25s ease;
+  padding: 0 18px;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+
+.faq-item.open .faq-answer {
+  max-height: 400px;
+  padding: 0 18px 18px;
+}
+
 .article-body blockquote {
   border-left: 3px solid var(--gold);
   margin: 1.6em 0;
